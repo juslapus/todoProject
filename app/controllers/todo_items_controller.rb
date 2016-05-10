@@ -1,5 +1,5 @@
 class TodoItemsController < ApplicationController
-	before_action :set_todo_list, :set_todo_item
+	before_action :set_todo_list
 
 	def create
 		@todo_item = @todo_list.todo_items.create(item_params)
@@ -11,6 +11,17 @@ class TodoItemsController < ApplicationController
 		@todo_item = TodoItem.find(params[:id])
 	end
 
+	def destroy
+		@todo_item = TodoItem.find(params[:id])
+		if @todo_item.destroy
+			flash[:success] = "Todo List item was deleted"
+		else
+			flash[:error] = "Todo List item could not be deleted"
+		end
+
+		redirect_to @todo_list
+	end
+
 	private
 	    def set_todo_list
 	      @todo_list = TodoList.find(params[:todo_list_id])
@@ -18,9 +29,5 @@ class TodoItemsController < ApplicationController
 
 		def item_params
 			params.require(:todo_item).permit(:item)
-		end
-
-		def set_todo_item
-			@todo_item = TodoItem.find(params[:id])
 		end
 end
