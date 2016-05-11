@@ -7,17 +7,22 @@
     <tr>
       <th>List</th>
       <th>Description</th>
-      <th colspan="3"></th>
+      <% if current_user == User.first %>
+      <th>User</th>
+      <% end %>
     </tr>
   </thead>
 
   <% if current_user %>
     <tbody>
       <% @todo_lists.each do |todo_list| %>
-        <% if current_user.id == todo_list.user_id %>
+        <% if (current_user == todo_list.user) || (current_user == User.first) %>
           <tr>
             <td><%= todo_list.list %></td>
             <td><%= todo_list.description %></td>
+            <% if (current_user == User.first) %>
+              <td><%= todo_list.user.email %></td>
+            <% end %>
             <td><%= link_to 'Show', todo_list %></td>
             <td><%= link_to 'Edit', edit_todo_list_path(todo_list) %></td>
             <td><%= link_to 'Destroy', todo_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
