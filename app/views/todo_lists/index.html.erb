@@ -11,19 +11,25 @@
     </tr>
   </thead>
 
-  <tbody>
-    <% @todo_lists.each do |todo_list| %>
-      <tr>
-        <td><%= todo_list.list %></td>
-        <td><%= todo_list.description %></td>
-        <td><%= link_to 'Show', todo_list %></td>
-        <td><%= link_to 'Edit', edit_todo_list_path(todo_list) %></td>
-        <td><%= link_to 'Destroy', todo_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
+  <% if current_user %>
+    <tbody>
+      <% @todo_lists.each do |todo_list| %>
+        <% if current_user.id == todo_list.user_id %>
+          <tr>
+            <td><%= todo_list.list %></td>
+            <td><%= todo_list.description %></td>
+            <td><%= link_to 'Show', todo_list %></td>
+            <td><%= link_to 'Edit', edit_todo_list_path(todo_list) %></td>
+            <td><%= link_to 'Destroy', todo_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  <% end %>
 </table>
 
 <br>
 
-<%= link_to 'New Todo list', new_todo_list_path %>
+<% if current_user %>
+  <%= link_to 'New Todo List', new_todo_list_path %>
+<% end %>
