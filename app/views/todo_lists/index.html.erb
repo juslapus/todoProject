@@ -1,40 +1,40 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
 
-<h1>Listing Todo Lists</h1>
+  <div class="starter-template" align="center">
+    <h1>Listing Todo Lists</h1>
+    <p class="lead">
+    
+    <% if current_user %>
+    <table class="table table-striped" width="100%">
+    <thead>
+      <tr>
+        <th width="30%">List</th>
+        <th width="30%" >Description</th>
+        <% if current_user == User.first %>
+        <th>User</th>
+        <% end %>
+        <th>Options</th>
+      </tr>
+    </thead>
 
-<table>
-  <thead>
-    <tr>
-      <th>List</th>
-      <th>Description</th>
-      <% if current_user == User.first %>
-      <th>User</th>
-      <% end %>
-    </tr>
-  </thead>
-
-  <% if current_user %>
     <tbody>
       <% @todo_lists.each do |todo_list| %>
         <% if (current_user == todo_list.user) || (current_user == User.first) %>
           <tr>
-            <td><%= todo_list.list %></td>
+            <td><%= link_to todo_list.list, todo_list %></td>
             <td><%= todo_list.description %></td>
             <% if (current_user == User.first) %>
               <td><%= todo_list.user.email %></td>
             <% end %>
-            <td><%= link_to 'Show', todo_list %></td>
-            <td><%= link_to 'Edit', edit_todo_list_path(todo_list) %></td>
-            <td><%= link_to 'Destroy', todo_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Show', todo_list %> | <%= link_to 'Edit', edit_todo_list_path(todo_list) %> | <%= link_to 'Destroy', todo_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
       <% end %>
     </tbody>
-  <% end %>
-</table>
+    </table>
+    <%= link_to 'Add a list', new_todo_list_path %>
+    <% end %>
 
-<br>
-
-<% if current_user %>
-  <%= link_to 'New Todo List', new_todo_list_path %>
-<% end %>
+  <p id="notice"><%= notice %></p>
+  </div>
+</div><!-- /.container -->

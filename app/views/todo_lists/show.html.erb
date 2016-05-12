@@ -1,21 +1,17 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>List:</strong>
-  <%= @todo_list.list %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @todo_list.description %>
-</p>
-
-<div id="todo_items_wrapper">
-	<%= render @todo_list.todo_items %>
-	<div id="form">
-		<%= render "todo_items/form" %>
-	</div>
+<div class="page-header" align="center">
+<h1><%= @todo_list.list %></h1>
 </div>
+<body align="center">
+	<p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_todo_list_path(@todo_list) %> |
-<%= link_to 'Back', todo_lists_path %>
+	<p>
+		<div id="todo_items_wrapper">
+			<%= render @todo_list.todo_items %>
+			<p>
+				<div id="form">
+					<%= render "todo_items/form" %>
+				</div>
+			</p>
+		</div>
+	</p>
+</body>
