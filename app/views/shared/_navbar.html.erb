@@ -36,7 +36,9 @@
 	         	<ul class="dropdown-menu">
 	           
 	         	<% TodoList.all.each do |list| %>
-	         		<li> <%= link_to list.list + " (" + list.todo_items.count.to_s + ")", list %> </li>
+	         		<% if list.user == current_user %>
+	         			<li> <%= link_to list.list + " (" + list.todo_items.count.to_s + ")", list %> </li>
+	         		<% end %>
 	         	<% end %>	
 
 	            <li role="separator" class="divider"></li>
