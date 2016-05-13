@@ -2,16 +2,51 @@
 <h1><%= @todo_list.list %></h1>
 </div>
 <body align="center">
-	<p id="notice"><%= notice %></p>
 
-	<p>
-		<div id="todo_items_wrapper">
-			<%= render @todo_list.todo_items %>
-			<p>
-				<div id="form">
-					<%= render "todo_items/form" %>
-				</div>
-			</p>
-		</div>
-	</p>
+<p>
+	<table class="table table-striped" width="60%" align="center">
+    <thead>
+      <tr>
+        <th width="50%">List</th>
+        <th>Options</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @todo_list.todo_items.each do |todo_item| %>
+         <% if !todo_item.completed? %>
+          	<tr>
+            	<td align="left"><%= todo_item.item %></td>
+           		<td align="left"><%= link_to "Mark as Complete", complete_todo_list_todo_item_path(@todo_list, todo_item.id), method: :patch %> - <%= link_to "Delete", todo_list_todo_item_path(@todo_list, todo_item.id), method: :delete, data: {confirm: "Are you sure?"} %></td>
+          </tr>
+          <% end %>
+      <% end %>
+
+      <% @todo_list.todo_items.each do |todo_item| %>
+         <% if todo_item.completed? %>
+          	<tr>
+            	<td align="left"><strike><%= todo_item.item %></strike></td>
+           		<td align="left"><%= link_to "Delete", todo_list_todo_item_path(@todo_list, todo_item.id), method: :delete, data: {confirm: "Are you sure?"} %></td>
+          </tr>
+          <% end %>
+      <% end %>
+    </tbody>
+    </table>
+</p>
+
+<p>
+	<div id="todo_items_wrapper">
+		<p>
+			<div id="form">
+				<%= render "todo_items/form" %>
+			</div>
+		</p>
+	</div>
+</p>
+
 </body>
+
+<p id="notice"><%= notice %></p>
+
+<!--
+-->
