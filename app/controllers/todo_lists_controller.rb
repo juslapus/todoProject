@@ -1,7 +1,7 @@
 class TodoListsController < ApplicationController
   before_action :set_todo_list, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  
+  before_action :verify_correct_user, only: [:show, :edit, :update]
   # GET /todo_lists
   # GET /todo_lists.json
   def index
@@ -59,6 +59,12 @@ class TodoListsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to todo_lists_url, notice: 'Todo list was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def verify_correct_user
+    if current_user != TodoList.find(params[:id]).user
+      redirect_to todo_lists_path
     end
   end
 
